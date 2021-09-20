@@ -1,17 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>You</h1>
+  <div class="option-container">
+    <div
+      class="option"
+      v-for="option in options"
+      :key="option"
+      @click="select(option)"
+    >
+      <span>
+        {{ option }}
+      </span>
+    </div>
+  </div>
+  <hr />
+  <h1>AI</h1>
+  <div class="option-container">
+    <div class="option" v-if="aiOption">
+      <span>
+        {{ aiOption }}
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from "@vue/reactivity";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: {},
+  setup() {
+    const options = ["Rock", "Paper", "Scissor"];
+    const aiOption = ref("");
+    return { options, aiOption };
+  },
+  methods: {
+    select() {
+      this.aiOption =
+        this.options[Math.floor(Math.random() * this.options.length)];
+    },
+  },
+};
 </script>
 
 <style>
@@ -22,5 +51,27 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.option-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 50px;
+}
+
+.option {
+  width: 100px;
+  height: 100px;
+  user-select: none;
+  cursor: pointer;
+  border: 2px solid gray;
+  border-radius: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 7px 15px 5px darkgrey;
 }
 </style>
